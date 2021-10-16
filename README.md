@@ -1,2 +1,2 @@
 # discord
-A filesystem that run's on discord channels messages.
+A filesystem that runs on discord's channels messages.
