@@ -69,7 +69,12 @@ export default class FileSystem {
      * @param token {string} Your account token with accesses to the guild.
      * @param guild {string} The server to which you want everything to be stored in.
      */
-    constructor(token: string, guild: string) {
+    constructor(token?: string, guild?: string) {
+        if (token !== undefined && guild !== undefined)
+            this.reconstruct(token, guild)
+    }
+
+    public reconstruct(token: string, guild: string): void {
 
         this.token = token;
         this.guild = guild;
@@ -80,15 +85,16 @@ export default class FileSystem {
         });
 
         this.client.open(token).then(() => {
-            console.log("Ready");
-        })
 
-        FileStorage.data.forEach((info, path) => {
+            this.files.clear();
 
-            if (info.type == "Dir")
-                this.createDir(path)
-            else
-                this.createFile(path)
+            FileStorage.data.forEach((info, path) => {
+
+                if (info.type == "Dir") this.createDir(path)
+                else this.createFile(path)
+            });
+
+            this.event.emit("init");
         })
     }
 

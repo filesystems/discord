@@ -10,29 +10,29 @@
     import FileUpload from "../components/FileUpload.svelte";
 
     export let files = [];
+    export let folders = [];
 
-    export let list = [];
     export let dir = "/";
     export let creating = false;
 
-    export const fs = new FileSystem(
-        "ODk5ODA5OTQ2NTAwMjA2NjIz.YW4LWw.ZkwGQoGAEQxwFCMtHCPJNRVj1LM",
-        "899810216382701609"
-    );
+    export const fs = new FileSystem();
+    //"ODk5ODA5OTQ2NTAwMjA2NjIz.YW4LWw.ZkwGQoGAEQxwFCMtHCPJNRVj1LM",
+    //"899810216382701609"
 
     fs.event.addListener("update-dir", (p) => {
-        if (p == dir || p + "/" == dir) update();
+        let isCurrent = p == dir || p + "/" == dir;
+        if (isCurrent) update();
     });
-    update();
+
+    fs.event.addListener("init", (p) => {
+        dir = "/";
+        update();
+    });
+
     function update() {
         let items = fs.ls(dir.endsWith("/") ? dir : dir + "/");
 
-        console.log(items);
-
-        list = items
-            .filter((e) => e.type == "Dir")
-            .map((file) => ({ path: file.path }));
-
+        folders = items.filter((e) => e.type == "Dir");
         files = items.filter((e) => e.type == "File");
     }
 
@@ -40,9 +40,33 @@
 
     let createName = "";
     let createFiles;
+
+    let token = localStorage.getItem("fs-token") || "";
+    let guild = localStorage.getItem("fs-guild") || "";
+
+    let logged = false;
 </script>
 
 <div id="root">
+    {#if !logged}
+        <Modal
+            submit={() => {
+                fs.reconstruct(token, guild);
+
+                localStorage.setItem("fs-token", token);
+                localStorage.setItem("fs-guild", guild);
+
+                logged = true;
+            }}
+            on:close={() => (creating = false)}
+        >
+            <bold slot="header">Enter the account token and the guild id</bold>
+            <div slot="content">
+                <Input bind:value={token} placeholder="Account token" />
+                <Input bind:value={guild} placeholder="Guild ID" />
+            </div>
+        </Modal>
+    {/if}
     {#if creating == true}
         <Modal
             submit={() => {
@@ -95,7 +119,7 @@
                 }}
             />
 
-            {#each list as { path }}
+            {#each folders as { path }}
                 <DirList
                     selected={path == dir}
                     click={() => {

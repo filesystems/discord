@@ -13,7 +13,7 @@
     }}
     selected={selected.toString()}
 >
-    <span type="path">{p.basename(path)}</span>
+    <span type="path">./{p.basename(path)}/</span>
 </dir-item>
 
 <style>

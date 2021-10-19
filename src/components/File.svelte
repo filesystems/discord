@@ -4,28 +4,30 @@
 </script>
 
 <file {type}>
-    <img
-        class="icon"
-        alt="File icon"
-        src="https://findicons.com/files/icons/2813/flat_jewels/512/file.png"
-    />
+    <div class="icon-holder">
+        <img
+            class="icon"
+            alt="File icon"
+            src="https://findicons.com/files/icons/2813/flat_jewels/512/file.png"
+        />
+    </div>
     <span class="name">{name}</span>
 </file>
 
 <style>
     file {
-        width: 100px;
-        height: 110px;
         display: inline-flex;
         flex-direction: column;
         transition: all 0.1s;
-        padding: 20px;
-        background: var(--secondary);
         margin: 10px;
-        border-radius: 5px;
         cursor: pointer;
     }
+    file:hover > .icon-holder {
+        box-shadow: 0px 5px 8px #0000001a;
+        transform: scale(1.05);
+    }
     file > .name {
+        font-size: 11px;
         margin: auto;
         margin-top: 10px;
         word-break: keep-all;
@@ -35,12 +37,19 @@
         text-overflow: ellipsis;
         text-align: center;
     }
-    file > .icon {
+    file > .icon-holder > .icon {
         margin: auto;
+        height: inherit;
+        width: inherit;
+    }
+    file > .icon-holder {
         height: 50px;
+        box-shadow: 0 0 transparent;
         width: 50px;
+        transition: all 0.1s;
+        background: var(--secondary);
+        border-radius: 10px;
         padding: 10px;
-        border-radius: 50px;
-        background: var(--button-selected);
+        margin: auto;
     }
 </style>
