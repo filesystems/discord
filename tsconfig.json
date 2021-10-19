@@ -1,0 +1,22 @@
+{
+    "extends": "@tsconfig/svelte/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./build/",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "target": "es2015",
+        "module": "es2015",
+        "types": [
+            "node",
+            "svelte"
+        ],
+        "lib": [
+            "es2019",
+            "dom"
+        ],
+        "allowJs": false
+    },
+    "files": [
+        "src/index.js"
+    ]
+}

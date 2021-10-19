@@ -1,0 +1,52 @@
+{
+  "name": "discord",
+  "version": "1.0.0",
+  "description": "A filesystem that runs on discord's channels messages.",
+  "main": "svelte.config.js",
+  "scripts": {
+    "build": "webpack",
+    "build:dev": "webpack --mode development --watch"
+  },
+  "dependencies": {
+    "@babel/core": "^7.15.8",
+    "axios": "^0.23.0",
+    "babel-loader": "^8.2.2",
+    "bl": "^5.0.0",
+    "bson-objectid": "^2.0.1",
+    "carbon-components-svelte": "^0.46.0",
+    "css-loader": "^6.4.0",
+    "events": "^3.3.0",
+    "filepond": "^4.30.3",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-preview": "^4.6.10",
+    "form-data": "^4.0.0",
+    "path": "^0.12.7",
+    "sass-loader": "^12.2.0",
+    "style-loader": "^3.3.0",
+    "svelte": "^3.43.2",
+    "svelte-file-dropzone": "0.0.15",
+    "svelte-filepond": "^0.2.0",
+    "svelte-loader": "^3.1.2",
+    "svelte-preprocess": "^4.9.8",
+    "svelte-ts-preprocess": "^1.1.3",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.58.2",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@tsconfig/svelte": "^2.0.1",
+    "webpack-cli": "^4.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filesystems/discord.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/filesystems/discord/issues"
+  },
+  "homepage": "https://github.com/filesystems/discord#readme"
+}
