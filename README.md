@@ -1,7 +1,8 @@
 # discord
 A filesystem that runs on discord's channels messages.
 
-![image](https://user-images.githubusercontent.com/45743294/137827766-abf4ef30-4258-4af3-83c7-e4c2312cbda2.png)
+![image](https://user-images.githubusercontent.com/45743294/138005401-b151dceb-18c5-47e8-b80a-6c26fa5fe24c.png)
+
 
 This file manager creates folders and file structors using basic path algos
 **ex:** `/root/path/to/file.txt`
