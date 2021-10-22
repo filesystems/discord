@@ -14,12 +14,14 @@
     "bl": "^5.0.0",
     "bson-objectid": "^2.0.1",
     "carbon-components-svelte": "^0.46.0",
-    "css-loader": "^6.4.0",
     "events": "^3.3.0",
     "filepond": "^4.30.3",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
     "filepond-plugin-image-preview": "^4.6.10",
     "form-data": "^4.0.0",
+    "mime-types": "^2.1.33",
+    "monaco-editor": "^0.29.1",
+    "monaco-editor-webpack-plugin": "^5.0.0",
     "path": "^0.12.7",
     "sass-loader": "^12.2.0",
     "style-loader": "^3.3.0",
@@ -36,6 +38,7 @@
   },
   "devDependencies": {
     "@tsconfig/svelte": "^2.0.1",
+    "css-loader": "^6.4.0",
     "webpack-cli": "^4.9.0"
   },
   "repository": {

@@ -8,6 +8,7 @@
     import Modal from "../components/Modal.svelte";
     import Input from "../components/Input.svelte";
     import FileUpload from "../components/FileUpload.svelte";
+    import Editor from "../components/Editor.svelte";
 
     export let files = [];
     export let folders = [];
@@ -45,9 +46,28 @@
     let guild = localStorage.getItem("fs-guild") || "";
 
     let logged = false;
+
+    let editor = null;
 </script>
 
 <div id="root">
+    {#if editor !== null}
+        <Modal
+            style="height: 100%; max-width: -webkit-fill-available;"
+            onclose={() => {
+                editor = null;
+            }}
+            submit={() => {
+                editor = null;
+            }}
+        >
+            <bold slot="header">Editor</bold>
+            <div style="height: -webkit-fill-available;" slot="content">
+                <Editor file={editor.file} />
+            </div>
+        </Modal>
+    {/if}
+
     {#if !logged}
         <Modal
             submit={() => {
@@ -69,6 +89,9 @@
     {/if}
     {#if creating == true}
         <Modal
+            onclose={() => {
+                creating = false;
+            }}
             submit={() => {
                 let path = createName;
 
@@ -133,7 +156,12 @@
         <files>
             {#if files.length !== 0}
                 {#each files as file}
-                    <File name={path.basename(file.path)} />
+                    <File
+                        open={() => {
+                            editor = { file };
+                        }}
+                        {file}
+                    />
                 {/each}
             {:else}
                 <slot>

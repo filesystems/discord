@@ -115,6 +115,8 @@ export default class FileSystem {
 
         if (upload == true) {
 
+            file.loading = true;
+
             let collection = this.client.collections.get("fs-files");
 
             let f = new FileClient({
@@ -128,14 +130,16 @@ export default class FileSystem {
 
                 /** File's buffer data */
                 data: file.data
-            })
+            });
 
             let data = await collection.upload(f);
 
             FileStorage.set(path, {
                 type: "File",
                 chunks: data.chunks
-            }, true)
+            }, true);
+
+            file.loading = false;
         }
     }
 
@@ -151,6 +155,8 @@ export default class FileSystem {
     }
 
     public set(path: string, file: File | Dir) {
+
+        if (!this.client) throw new Error("Client must be connected")
 
         if (!path.startsWith("/"))
             throw new Error("Invalid path");
@@ -191,6 +197,7 @@ export default class FileSystem {
                 throw new Error("There is already a file with the same name as the folder you specified.")
         }
 
+        file.fs = this
 
         this.files.set(path, file);
 

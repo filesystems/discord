@@ -1,3 +1,6 @@
+import EventEmitter from "events";
+import type FileSystem from "./FileSystem";
+
 export interface FileMeta {
     created?: Date,
     modified?: Date,
@@ -44,11 +47,24 @@ export class Meta {
 
 export class File {
 
+    public events = new EventEmitter
+
     public type = "File";
 
     public data: Blob = null;
 
     public path: string = null;
+
+    public cloading: boolean = false;
+
+    set loading(value) {
+        this.events.emit("loading", value);
+        this.cloading = value
+    }
+
+    get loading() { return this.cloading }
+
+    event(name, event) { this.events.addListener(name, event) }
 
     public get meta(): FileMeta {
 
@@ -60,5 +76,25 @@ export class File {
 
         Meta.set(this.path, value)
 
+    }
+
+    public fs: FileSystem;
+
+    public async get() {
+
+        this.loading = true;
+
+        try {
+            let [file] = await this.fs.client.collections.get("fs-files").find({
+                name: this.path
+            });
+
+            this.loading = false;
+            return file;
+        }
+        catch (e) {
+            this.loading = false;
+            return null;
+        }
     }
 }

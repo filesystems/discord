@@ -3,9 +3,16 @@
     import Button from "./Button.svelte";
 
     export let submit = () => {};
+    export let onclose = () => {};
+
+    export let style = "";
 
     const dispatch = createEventDispatcher();
-    const close = () => dispatch("close");
+
+    const close = () => {
+        onclose();
+        dispatch("close");
+    };
 
     let modal;
 
@@ -45,7 +52,7 @@
 
 <div class="modal-background" on:click={close} />
 
-<div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
+<div {style} class="modal" role="dialog" aria-modal="true" bind:this={modal}>
     <slot name="header" />
 
     <slot name="content" />
@@ -95,5 +102,9 @@
     .modal > .buttons {
         display: flex;
         width: -webkit-fill-available;
+    }
+
+    slot[name="content"] {
+        height: -webkit-fill-available;
     }
 </style>

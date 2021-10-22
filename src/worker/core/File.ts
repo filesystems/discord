@@ -66,10 +66,10 @@ export default class File {
         this.chunks = chunks;
     };
 
-    public async get(progress?: (percentage: number) => void): Promise<BufferListStream> {
+    public async get(progress?: (percentage: number) => void): Promise<Blob> {
         let urls: string[] = [];
 
-        let buffers: Buffer[] = []
+        let blobs: Blob[] = []
 
         for (let chunk of this.chunks)
             for (let attachment of chunk.attachments)
@@ -80,7 +80,7 @@ export default class File {
         for (let url of urls) {
 
             let request: { data: any } = await axios.get(url, {
-                responseType: 'arraybuffer',
+                responseType: 'blob',
                 onDownloadProgress: (event) => {
                     let value = Math.round((event.loaded * 100) / event.total) / left;
                     if (progress) progress(value);
@@ -89,19 +89,14 @@ export default class File {
                 },
             });
 
-            buffers.push(
-                Buffer.from(
-                    request.data,
-                    "binary"
-                )
-            )
+            blobs.push(request.data)
 
             left -= 1
         }
 
-        const bl = new BufferListStream(buffers);
 
-        return bl;
+
+        return new Blob(blobs);
     }
 
     /**
